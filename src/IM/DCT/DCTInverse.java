@@ -7,8 +7,6 @@ import java.awt.image.BufferedImage;
 public class DCTInverse {
 
     public double[][] process(double[][] matrix, int offset) {
-        int N = matrix.length;
-        double [][] outMatrix = new double[N][N];
 
         int n = matrix.length;
         int m = matrix[0].length;

@@ -9,6 +9,7 @@ import IM.Memento.Originator;
 import IM.Process.Effects.Grayscale;
 import IM.Process.Effects.Negative;
 import IM.Utils;
+import com.sun.jmx.mbeanserver.Util;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -103,15 +104,8 @@ public class Controller implements Initializable {
 
             System.out.println("Loaded image with size: " + this.imageWidth + " x " + this.imageHeight);
 
+            nValue.setText(String.valueOf(this.imageWidth * this.imageWidth - 1));
             this.setImage(currentImage, imageViewSpace);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
-                    setImage(Utils.setImage(matrix), imageViewSpace);
-                    setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), imageViewFrequency);
-                }
-            }).start();
         }
     }
 
@@ -151,10 +145,26 @@ public class Controller implements Initializable {
             if (n < 0 || n > (this.imageHeight * this.imageWidth - 1)) {
                 throw new NumberFormatException("Imagelid n size");
             }
-            System.err.println("All good");
+            this.runDCT(n);
         } catch (NumberFormatException e) {
             System.err.println("Invalid n size, should be between 0 and " + (this.imageHeight * this.imageWidth - 1));
         }
+    }
+
+    private void runDCT(int filter) {
+        new Thread(() -> {
+            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), imageViewSpace);
+            double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
+            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), imageViewFrequency);
+            setImage(Utils.setImage(matrix), imageViewSpace);
+            if (filter >= 0) {
+                //Utils.printMatrix(matrix);
+                System.err.println("\n\nFILTERING\n\n");
+                matrix = Utils.filterMatrixDiagonally(matrix, filter);
+                //Utils.printMatrix(matrix);
+            }
+            setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), imageViewFrequency);
+        }).start();
     }
 
     private void addToMemento(BufferedImage image) {

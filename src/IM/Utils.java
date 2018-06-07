@@ -53,12 +53,13 @@ public class Utils {
         return image;
     }
 
-    public static void printMatrix(int[][] matrix) {
+    public static void printMatrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
+            System.out.print("|");
             for (int j = 0; j < matrix[0].length; j++) {
                 System.out.print("" + matrix[i][j] + " ");
             }
-            System.out.println();
+            System.out.println("|");
         }
     }
 
@@ -72,6 +73,35 @@ public class Utils {
             bw.newLine();
         }
         bw.flush();
+    }
+
+    public static double[][] filterMatrix(double[][] matrix, int filterValue) {
+        int counter = 0;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (counter++ > filterValue) {
+                    matrix[i][j] = 0.0;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    public static double[][] filterMatrixDiagonally(double[][] matrix, int filterValue) {
+        // There will be ROW+COL-1 lines in the output
+        int counter = 0;
+
+        for (int line = 1; line <= (matrix.length + matrix[0].length - 1); line++) {
+            int start_col = Math.max(0, line - matrix.length);
+            int count = Math.min(Math.min(line, (matrix[0].length - start_col)), matrix.length);
+            for (int j = 0; j < count; j++) {
+                if (counter++ > filterValue) {
+                    matrix[Math.min(matrix.length, line) - j - 1][start_col + j] = 0.0;
+                }
+            }
+        }
+        return matrix;
     }
 
     public static int[][] readFromFile(String fileName, int size) throws FileNotFoundException {

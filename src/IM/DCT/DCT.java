@@ -81,7 +81,7 @@ public class DCT {
                             * Math.cos((Math.PI * (2. * i + 1.) * k) / (2. * matrix.length));
                 }
                 alfa = k == 0 ? 1. / Math.sqrt(matrix.length) : Math.sqrt(2. / matrix.length);
-                output[k][l] = (int)(alfa * sum);
+                output[k][l] = (alfa * sum);
             }
         }
 
@@ -93,7 +93,7 @@ public class DCT {
                             * Math.cos((Math.PI * (2. * j + 1.) * l) / (2. * matrix[0].length));
                 }
                 alfa = l == 0 ? 1. / Math.sqrt(matrix[0].length) : Math.sqrt(2. / matrix[0].length);
-                output2[k][l] = (int)(alfa * sum);
+                output2[k][l] = (alfa * sum);
             }
         }
 
