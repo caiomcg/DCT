@@ -6,14 +6,14 @@ import java.awt.image.BufferedImage;
 
 public class DCTInverse {
 
-    public int[][] process(int[][] matrix, int offset) {
+    public double[][] process(double[][] matrix, int offset) {
         int N = matrix.length;
-        int [][] outMatrix = new int[N][N];
+        double [][] outMatrix = new double[N][N];
 
         int n = matrix.length;
         int m = matrix[0].length;
-        int[][] c = new int[n][m];
-        int[][] c2 = new int[n][m];
+        double[][] c = new double[n][m];
+        double[][] c2 = new double[n][m];
         double alfa;
 
         for (int k = 0; k < n; k++) {

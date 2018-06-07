@@ -107,9 +107,9 @@ public class Controller implements Initializable {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
+                    double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
                     setImage(Utils.setImage(matrix), imageViewSpace);
-                    setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("200"))), imageViewFrequency);
+                    setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), imageViewFrequency);
                 }
             }).start();
         }

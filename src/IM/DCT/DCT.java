@@ -4,8 +4,7 @@ import IM.Utils;
 
 import java.awt.image.BufferedImage;
 
-public class DCT implements DCTInterface {
-    @Override
+public class DCT {
 //    public BufferedImage process(BufferedImage input) {
 //
 //        int[][] matrix = Utils.getMatrix(input);
@@ -64,11 +63,11 @@ public class DCT implements DCTInterface {
 //        return Utils.setImage(output);
 //    }
 
-    public int[][] process(int[][] input) {
+    public double[][] process(double[][] input) {
 
-        int[][] matrix = input; //z
-        int[][] output = new int[matrix.length][matrix[0].length]; //c
-        int[][] output2 = new int[matrix.length][matrix[0].length]; //c2
+        double[][] matrix = input; //z
+        double[][] output = new double[matrix.length][matrix[0].length]; //c
+        double[][] output2 = new double[matrix.length][matrix[0].length]; //c2
 
         double alfa;
         double sum;
