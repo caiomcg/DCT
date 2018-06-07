@@ -2,6 +2,7 @@ package sample;
 
 
 
+import IM.DCT.DCT;
 import IM.Memento.CareTaker;
 import IM.Memento.Originator;
 import IM.Process.Effects.Grayscale;
@@ -101,7 +102,12 @@ public class Controller implements Initializable {
             System.out.println("Loaded image with size: " + this.imageWidth + " x " + this.imageHeight);
 
             this.setImage(currentImage, imageViewSpace);
-            this.setImage(currentImage, imageViewFrequency);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    setImage(new DCT().process(currentImage), imageViewFrequency);
+                }
+            }).start();
         }
     }
 

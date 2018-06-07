@@ -89,8 +89,8 @@
    <center>
       <HBox fx:id="hBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imageViewSpace" fitHeight="526.0" fitWidth="526.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
-            <ImageView fx:id="imageViewFrequency" fitHeight="526.0" fitWidth="526.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageViewSpace" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
+            <ImageView fx:id="imageViewFrequency" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin></ImageView>
