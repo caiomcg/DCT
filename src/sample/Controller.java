@@ -107,13 +107,9 @@ public class Controller implements Initializable {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        int[][] matrix = Utils.readFromFile("/home/claudio/Documents/Workspace/java/DCT/samples/matrix.txt", 256);
-                        setImage(new DCTInverse().process(matrix, Integer.parseInt(nValue.getText())), imageViewFrequency);
-//                setImage(Utils.setImage(matrix), imageViewFrequency);
-                    } catch (FileNotFoundException e) {
-                        System.err.println("Failed to get DCT");
-                    }
+                    int[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
+                    setImage(Utils.setImage(matrix), imageViewSpace);
+                    setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("200"))), imageViewFrequency);
                 }
             }).start();
         }

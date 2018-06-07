@@ -64,9 +64,9 @@ public class DCT implements DCTInterface {
 //        return Utils.setImage(output);
 //    }
 
-    public BufferedImage process(BufferedImage input) {
+    public int[][] process(int[][] input) {
 
-        int[][] matrix = Utils.getMatrix(input); //z
+        int[][] matrix = input; //z
         int[][] output = new int[matrix.length][matrix[0].length]; //c
         int[][] output2 = new int[matrix.length][matrix[0].length]; //c2
 
@@ -98,6 +98,6 @@ public class DCT implements DCTInterface {
             }
         }
 
-        return Utils.setImage(output2);
+        return output2;
     }
 }

@@ -4,9 +4,9 @@ import IM.Utils;
 
 import java.awt.image.BufferedImage;
 
-public class DCTInverse implements DCTInterface {
+public class DCTInverse {
 
-    public BufferedImage process(int[][] matrix, int offset) {
+    public int[][] process(int[][] matrix, int offset) {
         int N = matrix.length;
         int [][] outMatrix = new int[N][N];
 
@@ -39,11 +39,6 @@ public class DCTInverse implements DCTInterface {
             }
         }
 
-        return Utils.setImage(c2);
-    }
-
-    @Override
-    public BufferedImage process(BufferedImage input) {
-        return null;
+        return c2;
     }
 }
