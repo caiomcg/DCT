@@ -3,6 +3,7 @@ package sample;
 
 
 import IM.DCT.DCT;
+import IM.DCT.DCTInverse;
 import IM.Memento.CareTaker;
 import IM.Memento.Originator;
 import IM.Process.Effects.Grayscale;
@@ -103,19 +104,18 @@ public class Controller implements Initializable {
             System.out.println("Loaded image with size: " + this.imageWidth + " x " + this.imageHeight);
 
             this.setImage(currentImage, imageViewSpace);
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    setImage(new DCT().process(currentImage), imageViewFrequency);
-//                }
-//            }).start();
-
-            try {
-                int[][] matrix = Utils.readFromFile("/home/caiomcg/Workspace/DCT/samples/matrix.txt", 256);
-                setImage(Utils.setImage(matrix), imageViewFrequency);
-            } catch (FileNotFoundException e) {
-                System.err.println("Failed to get DCT");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        int[][] matrix = Utils.readFromFile("/home/claudio/Documents/Workspace/java/DCT/samples/matrix.txt", 256);
+                        setImage(new DCTInverse().process(matrix, Integer.parseInt(nValue.getText())), imageViewFrequency);
+//                setImage(Utils.setImage(matrix), imageViewFrequency);
+                    } catch (FileNotFoundException e) {
+                        System.err.println("Failed to get DCT");
+                    }
+                }
+            }).start();
         }
     }
 
