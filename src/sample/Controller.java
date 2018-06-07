@@ -27,6 +27,7 @@ import javafx.util.converter.NumberStringConverter;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
@@ -102,12 +103,19 @@ public class Controller implements Initializable {
             System.out.println("Loaded image with size: " + this.imageWidth + " x " + this.imageHeight);
 
             this.setImage(currentImage, imageViewSpace);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    setImage(new DCT().process(currentImage), imageViewFrequency);
-                }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setImage(new DCT().process(currentImage), imageViewFrequency);
+//                }
+//            }).start();
+
+            try {
+                int[][] matrix = Utils.readFromFile("/home/caiomcg/Workspace/DCT/samples/matrix.txt", 256);
+                setImage(Utils.setImage(matrix), imageViewFrequency);
+            } catch (FileNotFoundException e) {
+                System.err.println("Failed to get DCT");
+            }
         }
     }
 

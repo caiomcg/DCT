@@ -5,7 +5,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
+import java.util.Scanner;
 
 public class Utils {
     @Nullable
@@ -59,5 +60,31 @@ public class Utils {
             }
             System.out.println();
         }
+    }
+
+    public static void sendToFile(String filename, int[][] matrix) throws IOException{
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                bw.write(matrix[i][j] + " ");
+            }
+            bw.newLine();
+        }
+        bw.flush();
+    }
+
+    public static int[][] readFromFile(String fileName, int size) throws FileNotFoundException {
+        Scanner input = new Scanner(new File(fileName));
+        int[][] matrix = new int[size][size];
+
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                if(input.hasNextInt()) {
+                    matrix[i][j] = input.nextInt();
+                }
+            }
+        }
+        return matrix;
     }
 }
