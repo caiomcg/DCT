@@ -38,7 +38,7 @@ public class Utils {
     }
 
     public static BufferedImage setImage(int[][] matrix) {
-        BufferedImage image = new BufferedImage(matrix.length, matrix.length, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage image = new BufferedImage(matrix.length, matrix[0].length, BufferedImage.TYPE_4BYTE_ABGR);
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
                 image.setRGB(i, j, ((0xFF) << 24) | (matrix[i][j] << 16) | (matrix[i][j] << 8) | matrix[i][j]);
@@ -49,7 +49,7 @@ public class Utils {
 
     public static void printMatrix(int[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 System.out.print("" + matrix[i][j] + " ");
             }
             System.out.println();
