@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane onKeyReleased="#keyReleased" stylesheets="@Stylesheet/home.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane onKeyReleased="#keyReleased" stylesheets="@Stylesheet/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="900.0" prefWidth="200.0" styleClass="background-vbox" BorderPane.alignment="CENTER">
          <children>
@@ -87,14 +94,33 @@
          </children></HBox>
    </bottom>
    <center>
-      <HBox fx:id="hBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imageViewSpace" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
-            <ImageView fx:id="imageViewFrequency" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin></ImageView>
+            <HBox fx:id="hBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="144.0" text="  Original Image -&gt;" />
+                  <ImageView fx:id="originalImg" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox fx:id="hBox2" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="144.0" text="Aplicando DCT ---&gt; " />
+                  <ImageView fx:id="applyingDCTImg" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
+                  <Label prefHeight="15.0" prefWidth="159.0" text=" - Aplicando o Filtro ---&gt;" />
+                  <ImageView fx:id="applyingFilterDCT" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox fx:id="hBox1" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <ImageView fx:id="IDCT" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" styleClass="sidebar-toggle-button" HBox.hgrow="ALWAYS" />
+                  <Label prefHeight="15.0" prefWidth="144.0" text="   Aplicando a IDCT" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </center>
 </BorderPane>

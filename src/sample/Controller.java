@@ -43,9 +43,13 @@ public class Controller implements Initializable {
     @FXML
     private Label statusLabel;
     @FXML
-    private ImageView imageViewSpace;
+    private ImageView originalImg;
     @FXML
-    private ImageView imageViewFrequency;
+    private ImageView applyingDCTImg;
+    @FXML
+    private ImageView applyingFilterDCT;
+    @FXML
+    private ImageView IDCT;
     @FXML
     private TextField nValue;
     //--------------------------------------------
@@ -91,7 +95,7 @@ public class Controller implements Initializable {
     public void openButton(ActionEvent event) {
         FileChooser fileChooser = Utils.createFileChooser("Open File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPEG files (*.jpg)", "*.jpg"));
-        File file = fileChooser.showOpenDialog(imageViewSpace.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(originalImg.getScene().getWindow());
 
         if (file != null) {
             this.statusLabel.setText("Opened: " + file.toURI().toString());
@@ -105,7 +109,7 @@ public class Controller implements Initializable {
             System.out.println("Loaded image with size: " + this.imageWidth + " x " + this.imageHeight);
 
             nValue.setText(String.valueOf(this.imageWidth * this.imageWidth - 1));
-            this.setImage(currentImage, imageViewSpace);
+            this.setImage(currentImage, originalImg);
         }
     }
 
@@ -153,17 +157,17 @@ public class Controller implements Initializable {
 
     private void runDCT(int filter) {
         new Thread(() -> {
-            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), imageViewSpace);
+//            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), originalImg);
             double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
-            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), imageViewFrequency);
-            setImage(Utils.setImage(matrix), imageViewSpace);
-//            if (filter >= 0) {
-//                //Utils.printMatrix(matrix);
-//                System.err.println("\n\nFILTERING\n\n");
-//                matrix = Utils.filterMatrixDiagonally(matrix, filter);
-//                //Utils.printMatrix(matrix);
-//            }
-            setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), imageViewFrequency);
+            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), applyingDCTImg);
+            setImage(Utils.setImage(matrix), applyingDCTImg);
+            if (filter >= 0) {
+                //Utils.printMatrix(matrix);
+                System.err.println("\n\nFILTERING\n\n");
+                matrix = Utils.filterMatrixDiagonally(matrix, filter);
+                setImage(Utils.setImage(matrix), applyingFilterDCT);
+            }
+            setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), IDCT);
         }).start();
     }
 
