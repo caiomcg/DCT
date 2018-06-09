@@ -157,12 +157,12 @@ public class Controller implements Initializable {
             double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
             setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), imageViewFrequency);
             setImage(Utils.setImage(matrix), imageViewSpace);
-            if (filter >= 0) {
-                //Utils.printMatrix(matrix);
-                System.err.println("\n\nFILTERING\n\n");
-                matrix = Utils.filterMatrixDiagonally(matrix, filter);
-                //Utils.printMatrix(matrix);
-            }
+//            if (filter >= 0) {
+//                //Utils.printMatrix(matrix);
+//                System.err.println("\n\nFILTERING\n\n");
+//                matrix = Utils.filterMatrixDiagonally(matrix, filter);
+//                //Utils.printMatrix(matrix);
+//            }
             setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), imageViewFrequency);
         }).start();
     }

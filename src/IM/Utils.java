@@ -42,11 +42,11 @@ public class Utils {
         BufferedImage image = new BufferedImage(matrix.length, matrix[0].length, BufferedImage.TYPE_4BYTE_ABGR);
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                if (matrix[i][j] > 255) {
-                    matrix[i][j] = 255;
-                } else if (matrix[i][j] < 0) {
-                    matrix[i][j] = 0;
-                }
+//                if (matrix[i][j] > 255) {
+//                    matrix[i][j] = 255;
+//                } else if (matrix[i][j] < 0) {
+//                    matrix[i][j] = 0;
+//                }
                 image.setRGB(i, j, ((0xFF) << 24) | ((int)matrix[i][j] << 16) | ((int)matrix[i][j] << 8) | (int)matrix[i][j]);
             }
         }

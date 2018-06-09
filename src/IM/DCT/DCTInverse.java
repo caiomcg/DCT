@@ -3,40 +3,59 @@ package IM.DCT;
 import IM.Utils;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class DCTInverse {
 
     public double[][] process(double[][] matrix, int offset) {
 
-        int n = matrix.length;
-        int m = matrix[0].length;
-        double[][] c = new double[n][m];
-        double[][] c2 = new double[n][m];
+        int N = matrix.length;
+
+        double[][] output = Arrays.copyOf(matrix, matrix.length); //z
+        double[][] result = new double[matrix.length][matrix[0].length]; //z
+        double[][] result2 = new double[matrix.length][matrix[0].length]; //z
+        for(int count = 0; count < matrix.length; count++) {
+            result[count] = this.idct(matrix[count]);
+        }
+
+        result = this.transpose(result);
+        for(int count = 0; count < N; count++) {
+            result2[count] = this.idct(result[count]);
+        }
+
+        return result2;
+    }
+
+
+    public double[][] transpose(double[][] matrix) {
+        double[][] transposed = new double[matrix.length][matrix[0].length];
+
+        for(int x = 0; x < matrix.length; x++) {
+            for(int y = 0; y < matrix.length; y++) {
+                transposed[x][y] = matrix[y][x];
+            }
+        }
+        return transposed;
+    }
+
+    public double[] idct(double[] matrix) {
+        double[] output = new double[matrix.length]; //c2
+
         double alfa;
+        double sum;
+        int N = matrix.length;
 
-        for (int k = 0; k < n; k++) {
-            for (int l = 0; l < m; l++) {
-                c[k][l] = 0;
-                for (int i = 0; i < n; i++) {
-                    alfa = i == 0 ? 1. / Math.sqrt(n) : Math.sqrt(2. / n);
-                    c[k][l] += alfa * matrix[i][l]
-                            * Math.cos((Math.PI * (2 * k + 1) * i) / (2 * n));
-                }
+        for (int n = 0; n < matrix.length; n++) {
+            sum = 0;
+            for (int k = 0; k < N; k++) {
+                alfa = k == 0 ? Math.sqrt(1.0/N) : Math.sqrt(2.0/N);
+                sum += alfa * matrix[k] * Math.cos((Math.PI * (2.0 * n + 1.0) * k) / (2.0 * N));
             }
+
+            output[n] = sum;
         }
 
-        for (int l = 0; l < m; l++) {
-            for (int k = 0; k < n; k++) {
-                c2[k][l] = 0;
-                for (int j = 0; j < m; j++) {
-                    alfa = j == 0 ? 1. / Math.sqrt(m) : Math.sqrt(2. / m);
-                    c2[k][l] += alfa * c[k][j]
-                            * Math.cos((Math.PI * (2 * l + 1) * j) / (2 * m));
-                }
-                c2[k][l] += offset;
-            }
-        }
 
-        return c2;
+        return output;
     }
 }
