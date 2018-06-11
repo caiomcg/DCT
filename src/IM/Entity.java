@@ -15,10 +15,10 @@ public class Entity implements Comparable<Entity> {
 
     @Override
     public int compareTo(Entity entity) {
-        if (this.value < entity.value) {
+        if (Math.abs(this.value) < Math.abs(entity.value)) {
             return 1;
         }
-        if (this.value > entity.value) {
+        if (Math.abs(this.value) > Math.abs(entity.value)) {
             return -1;
         }
         return 0;

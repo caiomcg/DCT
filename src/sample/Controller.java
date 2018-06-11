@@ -101,7 +101,7 @@ public class Controller implements Initializable {
             this.statusLabel.setText("Opened: " + file.toURI().toString());
 
             currentImage = SwingFXUtils.fromFXImage(new Image(file.toURI().toString()), null);
-            currentImage = new Grayscale().applyFilter(currentImage, false);
+            //currentImage = new Grayscale().applyFilter(currentImage, false);
 
             this.imageWidth = currentImage.getWidth();
             this.imageHeight = currentImage.getHeight();
@@ -158,16 +158,20 @@ public class Controller implements Initializable {
     private void runDCT(int filter) {
         new Thread(() -> {
 //            setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), originalImg);
-            double[][] matrix = new DCT().process(Utils.getMatrix(currentImage));
+            double[][] redMatrix = new DCT().process(Utils.getMatrix(currentImage, 16));
+            double[][] greenMatrix = new DCT().process(Utils.getMatrix(currentImage, 8));
+            double[][] blueMatrix = new DCT().process(Utils.getMatrix(currentImage, 0));
             setImage(new BufferedImage(this.imageWidth, this.imageHeight, BufferedImage.TYPE_4BYTE_ABGR), applyingDCTImg);
-            setImage(Utils.setImage(matrix), applyingDCTImg);
+            setImage(Utils.setImage(redMatrix, greenMatrix, blueMatrix), applyingDCTImg);
             if (filter >= 0) {
                 //Utils.printMatrix(matrix);
                 System.err.println("\n\nFILTERING\n\n");
-                Utils.filter(matrix, filter);
-                setImage(Utils.setImage(matrix), applyingFilterDCT);
+                Utils.filter(redMatrix, filter);
+                Utils.filter(greenMatrix, filter);
+                Utils.filter(blueMatrix, filter);
+                setImage(Utils.setImage(redMatrix, greenMatrix, blueMatrix), applyingFilterDCT);
             }
-            setImage(Utils.setImage(new DCTInverse().process(matrix)), IDCT);
+            setImage(Utils.setImage(new DCTInverse().process(redMatrix), new DCTInverse().process(greenMatrix), new DCTInverse().process(blueMatrix)), IDCT);
         }).start();
     }
 

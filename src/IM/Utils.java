@@ -28,29 +28,43 @@ public class Utils {
         }
         return url.substring(index + 1);
     }
-    public static double[][] getMatrix(BufferedImage bufferedImage) {
+    public static double[][] getMatrix(BufferedImage bufferedImage, int offset) {
         double[][] matrix = new double[bufferedImage.getWidth()][bufferedImage.getHeight()];
 
         for (int i = 0; i < bufferedImage.getWidth(); i++) {
             for (int j = 0; j < bufferedImage.getHeight(); j++) {
-                matrix[i][j] = bufferedImage.getRGB(i,j) & 0xFF;
+                matrix[i][j] = (bufferedImage.getRGB(i,j) >> offset) & 0xFF;
             }
         }
 
         return matrix;
     }
 
-    public static BufferedImage setImage(double[][] matrix) {
-        BufferedImage image = new BufferedImage(matrix.length, matrix[0].length, BufferedImage.TYPE_4BYTE_ABGR);
+    public static BufferedImage setImage(double[][] redMatrix, double[][] greenMatrix, double[][] blueMatrix) {
+        BufferedImage image = new BufferedImage(redMatrix.length, redMatrix[0].length, BufferedImage.TYPE_4BYTE_ABGR);
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                double value = matrix[i][j];
-                if (value > 255) {
-                    value = 255;
-                } else if (value < 0) {
-                    value = 0;
+                double rvalue = redMatrix[i][j];
+                double gvalue = greenMatrix[i][j];
+                double bvalue = blueMatrix[i][j];
+                if (rvalue > 255) {
+                    rvalue = 255;
+                } else if (rvalue < 0) {
+                    rvalue = 0;
                 }
-                image.setRGB(i, j, ((0xFF) << 24) | ((int)value << 16) | ((int)value << 8) | (int)value);
+                if (gvalue > 255) {
+                    gvalue = 255;
+                } else if (gvalue < 0) {
+                    rvalue = 0;
+                }
+
+                if (bvalue > 255) {
+                    bvalue = 255;
+                } else if (bvalue < 0) {
+                    bvalue = 0;
+                }
+
+                image.setRGB(i, j, ((0xFF) << 24) | ((int)rvalue << 16) | ((int)gvalue << 8) | (int)bvalue);
             }
         }
         return image;
