@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class DCTInverse {
 
-    public double[][] process(double[][] matrix, int offset) {
+    public double[][] process(double[][] matrix) {
 
         int N = matrix.length;
 

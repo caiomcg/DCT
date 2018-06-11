@@ -164,10 +164,10 @@ public class Controller implements Initializable {
             if (filter >= 0) {
                 //Utils.printMatrix(matrix);
                 System.err.println("\n\nFILTERING\n\n");
-                matrix = Utils.filterMatrixDiagonally(matrix, filter);
+                Utils.filter(matrix, filter);
                 setImage(Utils.setImage(matrix), applyingFilterDCT);
             }
-            setImage(Utils.setImage(new DCTInverse().process(matrix, Integer.parseInt("10"))), IDCT);
+            setImage(Utils.setImage(new DCTInverse().process(matrix)), IDCT);
         }).start();
     }
 

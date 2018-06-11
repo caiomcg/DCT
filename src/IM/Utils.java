@@ -6,6 +6,8 @@ import javafx.stage.Window;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Utils {
@@ -118,4 +120,27 @@ public class Utils {
         }
         return matrix;
     }
+
+    public static void filter(double[][] matrix, int filter) {
+        ArrayList<Entity> entities = new ArrayList<>();
+
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[i].length; j++) {
+                entities.add(new Entity(i, j, matrix[i][j]));
+            }
+        }
+
+
+        Collections.sort(entities);
+
+        int counter = 0;
+
+        for (Entity e : entities) {
+            if (counter++ > filter) {
+                System.out.println("Zeroing: " + "[" + e.x + "][" + e.y + "]");
+                matrix[e.x][e.y] = 0.0;
+            }
+        }
+    }
+
 }
